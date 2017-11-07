@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "list.h"
+#include <stdarg.h>
+#include "set.h"
 
 void init(set *l, int n) {
     l->vertices = calloc(n, sizeof(void *));
@@ -84,7 +85,21 @@ int vertex_index(set l, void *name) {
     return -1;
 }
 
+void destroy_set(set *l) {
+	int i;
+	for(i = 0; i < l->n; i++) {
+		free(l->vertices[i]);
+	}
+	free(l->vertices);
+}
 
-
-
+void destruct(int count, ...) {
+	va_list ap;
+	int i;
+	va_start(ap, count);
+	for(i = 0; i < count; i++) {
+		destroy_set(va_arg(ap, set *));
+	}
+	va_end(ap);
+}
 

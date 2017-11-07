@@ -11,11 +11,13 @@ int main(int argc, char **argv) {
 	FILE *fp1, *fp2;
 	fp1 = fopen(argv[1], "r");
 	if(fp1 == NULL) {
+		fprintf(stderr, "Failed to open file %s\n", argv[1]);
 		return -2;
 	}
 	fp2 = fopen(argv[2], "r");
 	if(fp2 == NULL) {
-		return -2;
+		fprintf(stderr, "Failed to open file %s\n", argv[2]);
+		return -3;
 	}
 	int i, n1, n2;
 	n1 = countlines(fp1);
@@ -48,6 +50,9 @@ int main(int argc, char **argv) {
 	}
 	fclose(fp1);
 	fclose(fp2);
+	//destroy_set(&l1);
+	//destroy_set(&l2);
+	destruct(2, &l1, &l2);
 	return 0;
 }
 

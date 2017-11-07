@@ -16,5 +16,7 @@ void insert(set *l, void *data, int size);
 int ispresent(set *l, void *data, int size);
 void removeblank(set *l);
 int vertex_index(set l, void *name);
+void destroy_set(set *l);
+void destruct(int count, ...);
 
 #endif /* SET_H_ */
