@@ -3,7 +3,7 @@
 #include <string.h>
 #include "list.h"
 
-void init(list *l, int n) {
+void init(set *l, int n) {
     l->vertices = calloc(n, sizeof(void *));
     l->n = n;
 }
@@ -27,7 +27,7 @@ int countlines(FILE *fp) {
 	return n;
 }
 
-void insert(list *l, void *data, int size) {
+void insert(set *l, void *data, int size) {
     if(!ispresent(l, data, size)) {
         int index;
         index = emptyentry(l);
@@ -38,7 +38,7 @@ void insert(list *l, void *data, int size) {
     }
 }
 
-int emptyentry(list *l) {
+int emptyentry(set *l) {
     int index;
     for(index = 0; index < l->n; index++) {
         if(l->vertices[index] == NULL) {
@@ -48,7 +48,7 @@ int emptyentry(list *l) {
     return -1;
 }
 
-int ispresent(list *l, void *data, int size) {
+int ispresent(set *l, void *data, int size) {
     if(emptylist(l->vertices, l->n)) {
         return 0;
     }
@@ -63,7 +63,7 @@ int ispresent(list *l, void *data, int size) {
     return 0;
 }
 
-void removeblank(list *l) {
+void removeblank(set *l) {
     int i, n;
     n = l->n;
     for(i = 0; i < n; i++) {
@@ -74,7 +74,7 @@ void removeblank(list *l) {
     }
 }
 
-int vertex_index(list l, void *name) {
+int vertex_index(set l, void *name) {
     int i;
     for(i = 0; i < l.n; i++) {
         if(memcmp(l.vertices[i], name, sizeof(void *)) == 0) {
@@ -83,5 +83,8 @@ int vertex_index(list l, void *name) {
     }
     return -1;
 }
+
+
+
 
 
