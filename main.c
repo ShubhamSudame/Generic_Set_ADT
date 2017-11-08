@@ -3,6 +3,9 @@
 #include <string.h>
 #include "set.h"
 
+int size(void *a, int index);
+int strsize(void *a, int index);
+
 int main(int argc, char **argv) {
 	if(argc != 3) {
 		fprintf(stderr, "Usage: ./myprog <string_file> <integer_file>\n");
@@ -22,7 +25,7 @@ int main(int argc, char **argv) {
 	int i, n1, n2;
 	n1 = countlines(fp1);
 	n2 = countlines(fp2);
-	set l1, l2;
+	set l1, l2, l3, l4;
 	init(&l1, n1);
 	init(&l2, n2);
 	char name[16] = {'\0'};
@@ -50,9 +53,32 @@ int main(int argc, char **argv) {
 	}
 	fclose(fp1);
 	fclose(fp2);
-	//destroy_set(&l1);
-	//destroy_set(&l2);
-	destruct(2, &l1, &l2);
+	getsize(l1, strsize);
+	getsize(l2, size);
+	l3 = copy_set(l2, size);
+	printf("The copy set of integers contains %d elements.\n", l3.n);
+	for(i = 0; i < l3.n; i++) {
+		printf("%d\n", *((int *)l3.vertices[i])); /* This is how you typecast a primitive*/
+	}
+	printf("\n");
+	l4 = copy_set(l1, strsize);
+	printf("The copy set of strings contains %d elements.\n", l4.n);
+	for(i = 0; i < l4.n; i++) {
+		printf("%s\n", (char *)l4.vertices[i]); /* This is how you typecast a string*/
+	}
+	printf("\n");
+	destruct(4, &l1, &l2, &l3, &l4);
 	return 0;
+}
+
+int size(void *a, int index) {
+	int size = *((int *)a);
+	return sizeof(size);
+}
+
+int strsize(void *a, int index) {
+	int size;
+	char *str = (char *)a;
+	return size = strlen(str);
 }
 

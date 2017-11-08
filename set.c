@@ -75,10 +75,10 @@ void removeblank(set *l) {
     }
 }
 
-int vertex_index(set l, void *name) {
+int vertex_index(set l, void *name, int size) {
     int i;
     for(i = 0; i < l.n; i++) {
-        if(memcmp(l.vertices[i], name, sizeof(void *)) == 0) {
+        if(memcmp(l.vertices[i], name, size) == 0) {
             return i;
         }
     }
@@ -103,3 +103,26 @@ void destruct(int count, ...) {
 	va_end(ap);
 }
 
+void getsize(set l, int (*len)(void *a, int index)) {
+	int i;
+	for(i = 0; i < l.n; i++) {
+		printf("%d\n", len(l.vertices[i], i));
+	}
+}
+
+//int length(set l, int(*len)(void *a, int index)) {
+//	int size;
+//	size = len(l.vertices[i], index);
+//	return size;
+//}
+
+set copy_set(set l, int(*len)(void *a, int index)) {
+	set copy;
+	init(&copy, l.n);
+	int i, size;
+	for(i = 0; i < l.n; i++) {
+		size = len(l.vertices[i], i);
+		insert(&copy, l.vertices[i], size);
+	}
+	return copy;
+}
