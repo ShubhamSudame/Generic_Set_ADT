@@ -23,5 +23,7 @@ set copy_set(set l, int(*len)(void *a, int index));
 set Union(set A, set B, int (*len)(void *a, int index));
 set Intersection(set A, set B, int (*len)(void *a, int index));
 set Difference(set A, set B, int (*len)(void *a, int index));
+int is_subset(set A, set B, int (*len)(void *a, int index));
+int cardinality(set A);
 
 #endif /* SET_H_ */

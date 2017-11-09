@@ -164,3 +164,21 @@ set Difference(set A, set B, int (*len)(void *a, int index)) {
 	removeblank(&D);
 	return D;
 }
+
+int cardinality(set A) {
+	return A.n;
+}
+
+int is_subset(set A, set B, int (*len)(void *a, int index)) {
+	int i, size, flag;
+	for(i = 0; i < A.n; i++) {
+		size = len(A.vertices[i], i);
+		if(ispresent(&B, A.vertices[i], size)) {
+			flag = 1;
+		}
+		else {
+			flag = 0;
+		}
+	}
+	return flag;
+}

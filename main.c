@@ -98,6 +98,12 @@ int main(int argc, char **argv) {
 		printf("%d\n", *((int *)D.vertices[i])); /* This is how you typecast a primitive*/
 	}
 	printf("\n");
+	printf("Cardinality of set l1 = %d\n", cardinality(l1));
+	if(is_subset(I, l5, size)) {
+		printf("I is a subset of l5\n");
+	}
+	else
+		printf("I is not a subset of l5\n");
 	destruct(8, &l1, &l2, &l3, &l4, &l5, &U, &I, &D);
 	return 0;
 }
