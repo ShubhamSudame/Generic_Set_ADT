@@ -67,7 +67,38 @@ int main(int argc, char **argv) {
 		printf("%s\n", (char *)l4.vertices[i]); /* This is how you typecast a string*/
 	}
 	printf("\n");
-	destruct(4, &l1, &l2, &l3, &l4);
+
+	set l5, U, I, D;
+	init(&l5, 5);
+	int j, digit;
+	for(j = 0; j < l5.n; j++) {
+		scanf("%d", &digit);
+		insert(&l5, &digit, sizeof(int));
+	}
+	printf("The new set of integers l5 contains %d elements.\n", l5.n);
+	for(i = 0; i < l5.n; i++) {
+		printf("%d\n", *((int *)l5.vertices[i])); /* This is how you typecast a primitive*/
+	}
+	printf("\n");
+	U = Union(l3, l5, size);
+	printf("The Union set of integers contains %d elements.\n", U.n);
+	for(i = 0; i < U.n; i++) {
+		printf("%d\n", *((int *)U.vertices[i])); /* This is how you typecast a primitive*/
+	}
+	printf("\n");
+	I = Intersection(l3, l5, size);
+	printf("The Intersection set of integers contains %d elements.\n", I.n);
+	for(i = 0; i < I.n; i++) {
+		printf("%d\n", *((int *)I.vertices[i])); /* This is how you typecast a primitive*/
+	}
+	printf("\n");
+	D = Difference(l3, l5, size);
+	printf("The Difference set of integers contains %d elements.\n", D.n);
+	for(i = 0; i < D.n; i++) {
+		printf("%d\n", *((int *)D.vertices[i])); /* This is how you typecast a primitive*/
+	}
+	printf("\n");
+	destruct(8, &l1, &l2, &l3, &l4, &l5, &U, &I, &D);
 	return 0;
 }
 

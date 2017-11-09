@@ -19,7 +19,9 @@ int vertex_index(set l, void *name, int size);
 void destroy_set(set *l);
 void destruct(int count, ...);
 void getsize(set l, int (*len)(void *a, int index));
-//int length(set l, int(*len)(void *a, int index));
 set copy_set(set l, int(*len)(void *a, int index));
+set Union(set A, set B, int (*len)(void *a, int index));
+set Intersection(set A, set B, int (*len)(void *a, int index));
+set Difference(set A, set B, int (*len)(void *a, int index));
 
 #endif /* SET_H_ */

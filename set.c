@@ -110,12 +110,6 @@ void getsize(set l, int (*len)(void *a, int index)) {
 	}
 }
 
-//int length(set l, int(*len)(void *a, int index)) {
-//	int size;
-//	size = len(l.vertices[i], index);
-//	return size;
-//}
-
 set copy_set(set l, int(*len)(void *a, int index)) {
 	set copy;
 	init(&copy, l.n);
@@ -125,4 +119,48 @@ set copy_set(set l, int(*len)(void *a, int index)) {
 		insert(&copy, l.vertices[i], size);
 	}
 	return copy;
+}
+
+set Union(set A, set B, int (*len)(void *a, int index)) {
+	set U;
+	init(&U, A.n + B.n);
+	int i, size;
+	for(i = 0; i < A.n; i++) {
+		size = len(A.vertices[i], i);
+		insert(&U, A.vertices[i], size);
+	}
+	for(i = 0; i < B.n; i++) {
+		size = len(B.vertices[i], i);
+		insert(&U, B.vertices[i], size);
+	}
+	removeblank(&U);
+	return U;
+}
+
+set Intersection(set A, set B, int (*len)(void *a, int index)) {
+	set I;
+	init(&I, A.n + B.n);
+	int i, size;
+	for(i = 0; i < A.n; i++) {
+		size = len(A.vertices[i], i);
+		if(ispresent(&B, A.vertices[i], size)) {
+			insert(&I, A.vertices[i], size);
+		}
+	}
+	removeblank(&I);
+	return I;
+}
+
+set Difference(set A, set B, int (*len)(void *a, int index)) {
+	set D;
+	init(&D, A.n);
+	int i, size;
+	for(i = 0; i < A.n; i++) {
+		size = len(A.vertices[i], i);
+		if(!ispresent(&B, A.vertices[i], size)) {
+			insert(&D, A.vertices[i], size);
+		}
+	}
+	removeblank(&D);
+	return D;
 }
