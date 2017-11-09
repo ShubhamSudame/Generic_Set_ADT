@@ -2,9 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include "set.h"
-
-int size(void *a, int index);
+/* While dealing with a particular kind of list, user must write the required functions of signature int ()(void *, int) 
+ * & return size of the data type that the user is dealing with.
+ */
+int integer_size(void *a, int index);
 int strsize(void *a, int index);
+int real_size(void *a, int index);
+int character_size(void *a, int index);
+int long_size(void *a, int index);
+int long_double_size(void *a, int index);
 
 int main(int argc, char **argv) {
 	if(argc != 3) {
@@ -54,8 +60,8 @@ int main(int argc, char **argv) {
 	fclose(fp1);
 	fclose(fp2);
 	getsize(l1, strsize);
-	getsize(l2, size);
-	l3 = copy_set(l2, size);
+	getsize(l2, integer_size);
+	l3 = copy_set(l2, integer_size);
 	printf("The copy set of integers contains %d elements.\n", l3.n);
 	for(i = 0; i < l3.n; i++) {
 		printf("%d\n", *((int *)l3.vertices[i])); /* This is how you typecast a primitive*/
@@ -80,26 +86,26 @@ int main(int argc, char **argv) {
 		printf("%d\n", *((int *)l5.vertices[i])); /* This is how you typecast a primitive*/
 	}
 	printf("\n");
-	U = Union(l3, l5, size);
+	U = Union(l3, l5, integer_size);
 	printf("The Union set of integers contains %d elements.\n", U.n);
 	for(i = 0; i < U.n; i++) {
 		printf("%d\n", *((int *)U.vertices[i])); /* This is how you typecast a primitive*/
 	}
 	printf("\n");
-	I = Intersection(l3, l5, size);
+	I = Intersection(l3, l5, integer_size);
 	printf("The Intersection set of integers contains %d elements.\n", I.n);
 	for(i = 0; i < I.n; i++) {
 		printf("%d\n", *((int *)I.vertices[i])); /* This is how you typecast a primitive*/
 	}
 	printf("\n");
-	D = Difference(l3, l5, size);
+	D = Difference(l3, l5, integer_size);
 	printf("The Difference set of integers contains %d elements.\n", D.n);
 	for(i = 0; i < D.n; i++) {
 		printf("%d\n", *((int *)D.vertices[i])); /* This is how you typecast a primitive*/
 	}
 	printf("\n");
 	printf("Cardinality of set l1 = %d\n", cardinality(l1));
-	if(is_subset(I, l5, size)) {
+	if(is_subset(I, l5, integer_size)) {
 		printf("I is a subset of l5\n");
 	}
 	else
@@ -108,7 +114,7 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-int size(void *a, int index) {
+int integer_size(void *a, int index) {
 	int size = *((int *)a);
 	return sizeof(size);
 }
@@ -117,5 +123,25 @@ int strsize(void *a, int index) {
 	int size;
 	char *str = (char *)a;
 	return size = strlen(str);
+}
+
+int real_size(void *a, int index) {
+	double var = *((double *)a);
+	return sizeof(var);
+}
+
+int character_size(void *a, int index) {
+	char c = *((char *)a);
+	return sizeof(c);
+}
+
+int long_size(void *a, int index) {
+	long l = *((long *)a);
+	return sizeof(l);
+}
+
+int long_double_size(void *a, int index) {
+	long double l = *((long double *)a);
+	return sizeof(l);
 }
 
